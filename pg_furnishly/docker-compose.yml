@@ -1,0 +1,14 @@
+version: '3'
+services:
+  pgdb:
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=12345678
+    - POSTGRES_DB=furnishly
+    - PGDATA=/var/lib/postgresql/data/postgres
+    image: 'postgres:10.23-alpine'
+    ports:
+    - 5445:5432
+    restart: unless-stopped
+    volumes:
+    - ./pgdb:/docker-entrypoint-initdb.d:ro
