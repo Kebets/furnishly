@@ -1,4 +1,4 @@
-package com.ast.furnishly;
+package com.ast.furnishly.servlets;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

@@ -1,9 +1,9 @@
-package com.ast.furnishly;
+package com.ast.furnishly.servlets;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/api")
-public class HelloApplication extends Application {
+public class FurnishlyApplication extends Application {
 
 }
