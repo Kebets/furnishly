@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS furniture (
 	description VARCHAR(255),
 	manufacturer_id INT,
 	price DECIMAL(10, 2),
-	number INT,
+    quantity INT,
 	CONSTRAINT furniture_type_id FOREIGN KEY(type_id) REFERENCES type(id),
   	CONSTRAINT furniture_manufactourer_id FOREIGN KEY(manufacturer_id) REFERENCES manufacturer(id)
 );
