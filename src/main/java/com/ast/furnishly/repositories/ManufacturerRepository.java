@@ -1,4 +1,6 @@
 package com.ast.furnishly.repositories;
 
-public interface ManufacturerRepository {
+import com.ast.furnishly.entities.Manufacturer;
+
+public interface ManufacturerRepository extends Repository<Manufacturer, Long> {
 }
