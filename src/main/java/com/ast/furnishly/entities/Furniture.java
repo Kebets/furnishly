@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Furniture {
-    private int id;
+    private Long id;
     private Type type;
     private String name;
     private Manufacturer manufacturer;
