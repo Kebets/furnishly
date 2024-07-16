@@ -1,4 +1,6 @@
 package com.ast.furnishly.repositories;
 
-public interface TypeRepository {
+import com.ast.furnishly.entities.Type;
+
+public interface TypeRepository extends Repository<Type, Long>{
 }
