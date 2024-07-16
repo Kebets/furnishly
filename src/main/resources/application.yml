@@ -1,0 +1,5 @@
+db:
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5445/furnishly
+  username: postgres
+  password: 12345678
