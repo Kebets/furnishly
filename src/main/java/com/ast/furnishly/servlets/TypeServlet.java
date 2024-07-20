@@ -1,5 +1,7 @@
 package com.ast.furnishly.servlets;
 
+import com.ast.furnishly.dto.TypeDto;
+import com.ast.furnishly.exceptions.NotFoundException;
 import com.ast.furnishly.services.TypeService;
 import com.ast.furnishly.services.impl.TypeServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,15 +12,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/type/*"})
-//@WebServlet("/type")
 public class TypeServlet extends HttpServlet {
-    private final TypeService typeService;
+//    private final TypeService typeService;
     private final ObjectMapper objectMapper;
 
     public TypeServlet(){
-        this.typeService = TypeServiceImpl.getInstance();
+//        this.typeService = TypeServiceImpl.getInstance();
         this.objectMapper = new ObjectMapper();
     }
 
@@ -40,22 +43,22 @@ public class TypeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.getWriter().println("Hello");
-//        setJsonHeader(resp);
+        setJsonHeader(resp);
 
-        /*String responseAnswer = "";
+        String responseAnswer = "";
         try {
             String[] pathPart = req.getPathInfo().split("/");
             if ("all".equals(pathPart[1])) {
-                List<TypeDto> typeDtoList = typeService.findAll();
+//                List<TypeDto> typeDtoList = typeService.findAll();
                 resp.setStatus(HttpServletResponse.SC_OK);
-                responseAnswer = objectMapper.writeValueAsString(typeDtoList);
-                responseAnswer = "Hi!";
+//                responseAnswer = objectMapper.writeValueAsString(typeDtoList);
+                responseAnswer = "Hi ALL!";
             } else {
                 Long typeId = Long.parseLong(pathPart[1]);
-                TypeDto typeDto = typeService.findById(typeId);
+//                TypeDto typeDto = typeService.findById(typeId);
                 resp.setStatus(HttpServletResponse.SC_OK);
-                responseAnswer = objectMapper.writeValueAsString(typeDto);
-                responseAnswer = "Hi!";
+//                responseAnswer = objectMapper.writeValueAsString(typeDto);
+                responseAnswer = "Hi with number!";
             }
         } catch (NotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -66,6 +69,6 @@ public class TypeServlet extends HttpServlet {
         }
         PrintWriter printWriter = resp.getWriter();
         printWriter.write(responseAnswer);
-        printWriter.flush();*/
+        printWriter.flush();
     }
 }
