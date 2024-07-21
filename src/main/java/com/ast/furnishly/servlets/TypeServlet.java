@@ -17,11 +17,11 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/type/*"})
 public class TypeServlet extends HttpServlet {
-//    private final TypeService typeService;
+    private final TypeService typeService;
     private final ObjectMapper objectMapper;
 
     public TypeServlet(){
-//        this.typeService = TypeServiceImpl.getInstance();
+        this.typeService = TypeServiceImpl.getInstance();
         this.objectMapper = new ObjectMapper();
     }
 
@@ -42,23 +42,20 @@ public class TypeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.getWriter().println("Hello");
         setJsonHeader(resp);
 
         String responseAnswer = "";
         try {
             String[] pathPart = req.getPathInfo().split("/");
             if ("all".equals(pathPart[1])) {
-//                List<TypeDto> typeDtoList = typeService.findAll();
+                List<TypeDto> typeDtoList = typeService.findAll();
                 resp.setStatus(HttpServletResponse.SC_OK);
-//                responseAnswer = objectMapper.writeValueAsString(typeDtoList);
-                responseAnswer = "Hi ALL!";
+                responseAnswer = objectMapper.writeValueAsString(typeDtoList);
             } else {
                 Long typeId = Long.parseLong(pathPart[1]);
-//                TypeDto typeDto = typeService.findById(typeId);
+                TypeDto typeDto = typeService.findById(typeId);
                 resp.setStatus(HttpServletResponse.SC_OK);
-//                responseAnswer = objectMapper.writeValueAsString(typeDto);
-                responseAnswer = "Hi with number!";
+                responseAnswer = objectMapper.writeValueAsString(typeDto);
             }
         } catch (NotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
