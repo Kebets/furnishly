@@ -8,5 +8,7 @@ import java.util.List;
 public interface TypeMapper {
     TypeDto map(Type type);
 
+    Type map(TypeDto typeDto);
+
     List<TypeDto> map(List<Type> typeList);
 }
