@@ -13,8 +13,10 @@ import java.util.List;
 
 public class TypeServiceImpl implements TypeService {
     private TypeRepository typeRepository = TypeRepositoryImpl.getInstance();
-    private TypeMapper typeMapper = TypeMapperImpl.getInstance();
+    private final TypeMapper typeMapper = TypeMapperImpl.getInstance();
     private static TypeService typeService;
+
+    private TypeServiceImpl() {}
 
     public static synchronized TypeService getInstance(){
         if (typeService == null){
@@ -34,4 +36,31 @@ public class TypeServiceImpl implements TypeService {
         List<Type> typeList = typeRepository.findAll();
         return typeMapper.map(typeList);
     }
+
+    @Override
+    public boolean delete(Long id) throws NotFoundException {
+        checkTypeExist(id);
+        return typeRepository.deleteById(id);
+    }
+
+    private void checkTypeExist(Long roleId) throws NotFoundException {
+        if (!typeRepository.existsById(roleId)) {
+            throw new NotFoundException("Type not found.");
+        }
+    }
+
+    @Override
+    public TypeDto save(TypeDto typeDto) {
+        Type type = typeMapper.map(typeDto);
+        type = typeRepository.save(type);
+        return typeMapper.map(type);
+    }
+
+    @Override
+    public void update(Long id, TypeDto typeDto) throws NotFoundException {
+        checkTypeExist(typeDto.getId());
+        Type type = typeMapper.map(typeDto);
+        typeRepository.update(type);
+    }
+
 }
