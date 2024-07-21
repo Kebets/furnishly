@@ -11,10 +11,11 @@ import lombok.NoArgsConstructor;
  * Many to One: Furniture -> Manufacturer
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Manufacturer {
     private Long id;
     private String name;
+    private String address;
     private String country;
 }
