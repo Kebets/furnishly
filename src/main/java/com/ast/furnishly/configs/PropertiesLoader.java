@@ -5,7 +5,7 @@ import java.util.Properties;
 
 public class PropertiesLoader {
     private static final Properties PROPERTIES = new Properties();
-    private static final String PROPERTIES_FILE = "application.yml";
+    private static final String PROPERTIES_FILE = "db.properties";
 
     static {
         loadProperties();
