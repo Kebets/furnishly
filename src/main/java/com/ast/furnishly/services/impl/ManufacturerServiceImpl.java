@@ -11,11 +11,19 @@ import com.ast.furnishly.services.ManufacturerService;
 
 import java.util.List;
 
+/**
+ * Implementation of the ManufacturerService interface.
+ */
 public class ManufacturerServiceImpl implements ManufacturerService {
     private ManufacturerRepository manufacturerRepository = ManufacturerRepositoryImpl.getInstance();
     private ManufacturerMapper manufacturerMapper = ManufacturerMapperImpl.getInstance();
     private static ManufacturerServiceImpl manufacturerService;
 
+    /**
+     * Gets an instance of the ManufacturerService.
+     *
+     * @return The ManufacturerService instance.
+     */
     public static synchronized ManufacturerService getInstance() {
         if (manufacturerService == null) {
             manufacturerService = new ManufacturerServiceImpl();
@@ -49,7 +57,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public void update(Long id, ManufacturerDto manufacturerDto) throws NotFoundException {
+    public void update(ManufacturerDto manufacturerDto) throws NotFoundException {
         checkManufacturerExist(manufacturerDto.getId());
         Manufacturer manufacturer = manufacturerMapper.map(manufacturerDto);
         manufacturerRepository.update(manufacturer);

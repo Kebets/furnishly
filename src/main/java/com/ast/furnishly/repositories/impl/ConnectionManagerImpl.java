@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Implementation of the {@link ConnectionManager} interface for managing database connections.
+ */
 @NoArgsConstructor
 public class ConnectionManagerImpl implements ConnectionManager {
     private static final String DRIVER_CLASS_KEY = "db.driver-class-name";
@@ -17,6 +20,11 @@ public class ConnectionManagerImpl implements ConnectionManager {
     private static final String PASSWORD_KEY = "db.password";
     private static ConnectionManager connectionManager;
 
+    /**
+     * Returns an instance of the `ConnectionManagerImpl`.
+     *
+     * @return The singleton instance of `ConnectionManagerImpl`.
+     */
     public static synchronized ConnectionManager getConnectionManager() {
         if (connectionManager == null) {
             connectionManager = new ConnectionManagerImpl();

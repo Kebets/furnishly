@@ -1,5 +1,6 @@
 package com.ast.furnishly.repositories.impl;
 
+import com.ast.furnishly.entities.Furniture;
 import com.ast.furnishly.entities.Manufacturer;
 import com.ast.furnishly.entities.Type;
 import com.ast.furnishly.exceptions.NotFoundException;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of the {@link ManufacturerRepository} interface for managing manufacturer data in a database.
+ */
 public class ManufacturerRepositoryImpl implements ManufacturerRepository {
     private static final String FIND_ALL_MANUFACTURERS = "SELECT * FROM manufacturer";
     private static final String FIND_BY_ID = "SELECT * FROM manufacturer WHERE id = ? LIMIT 1";
@@ -18,10 +22,15 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
     private static final String UPDATE = "UPDATE manufacturer SET name = ?, address = ?, country = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM manufacturer WHERE id = ?";
     private static final String EXIST_BY_ID = "SELECT 1 FROM manufacturer WHERE id = ? LIMIT 1";
-
+    private static final String FIND_ALL_FURNITURE_BY_MANUFACTURER_ID = "SELECT * FROM furniture WHERE manufacturer_id = ?";
     private static ManufacturerRepository instance;
     private final ConnectionManager connectionManager = ConnectionManagerImpl.getConnectionManager();
 
+    /**
+     * Returns an instance of the `ManufacturerRepositoryImpl`.
+     *
+     * @return The singleton instance of `ManufacturerRepositoryImpl`.
+     */
     public static ManufacturerRepository getInstance() {
         if (instance == null) {
             instance = new ManufacturerRepositoryImpl();
@@ -34,6 +43,8 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, manufacturer.getName());
+            preparedStatement.setString(2, manufacturer.getAddress());
+            preparedStatement.setString(3, manufacturer.getCountry());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -101,7 +112,7 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
                 manufacturers.add(createManufacturer(resultSet));
             }
         }catch(SQLException e) {
-            e.printStackTrace();
+            throw new NotFoundException("Manufacturers not found.");
         }
         return manufacturers;
     }
@@ -122,6 +133,13 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
         return isExists;
     }
 
+    /**
+     * Creates a `Manufacturer` object from the given `ResultSet`.
+     *
+     * @param resultSet The result set containing manufacturer data.
+     * @return A populated `Manufacturer` object.
+     * @throws SQLException If an error occurs while retrieving data from the result set.
+     */
     public Manufacturer createManufacturer(ResultSet resultSet) throws SQLException {
         Manufacturer manufacturer = new Manufacturer();
         manufacturer.setId(resultSet.getLong(1));
@@ -130,4 +148,25 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
         manufacturer.setCountry(resultSet.getString(4));
         return manufacturer;
     }
+
+    private List<Furniture> getFurniture(Connection connection, Manufacturer manufacturer) throws SQLException {
+        List<Furniture> furnitureList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_FURNITURE_BY_MANUFACTURER_ID)) {
+            preparedStatement.setLong(1, manufacturer.getId());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Furniture furniture = new Furniture();
+                    furniture.setId(resultSet.getLong(1));
+                    //furniture.setType(resultSet.getType(2));
+                    furniture.setName(resultSet.getString(3));
+                    furniture.setManufacturer(manufacturer);
+                    furniture.setPrice(resultSet.getBigDecimal(4));
+                    furniture.setQuantity(resultSet.getInt(5));
+                    furnitureList.add(furniture);
+                }
+            }
+        }
+        return furnitureList;
+    }
+
 }

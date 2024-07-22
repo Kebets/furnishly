@@ -1,16 +1,16 @@
 package com.ast.furnishly.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+/**
+ * Data transfer object (DTO) for type information.
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TypeDto {
     private Long id;
     private String name;
-
-    public TypeDto(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
 }

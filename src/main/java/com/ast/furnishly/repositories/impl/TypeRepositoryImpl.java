@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of the {@link TypeRepository} interface for managing type data in a database.
+ */
 public class TypeRepositoryImpl implements TypeRepository {
     private static String FIND_ALL_TYPES = "SELECT * FROM type";
     private static final String FIND_BY_ID = "SELECT * FROM type WHERE id = ? LIMIT 1";
@@ -21,6 +24,11 @@ public class TypeRepositoryImpl implements TypeRepository {
     private static TypeRepository instance;
     private final ConnectionManager connectionManager = ConnectionManagerImpl.getConnectionManager();
 
+    /**
+     * Returns an instance of the `TypeRepositoryImpl`.
+     *
+     * @return The singleton instance of `TypeRepositoryImpl`.
+     */
     public static TypeRepository getInstance() {
         if (instance == null) {
             instance = new TypeRepositoryImpl();

@@ -1,18 +1,24 @@
 package com.ast.furnishly.mappers.impl;
 
 import com.ast.furnishly.dto.ManufacturerDto;
-import com.ast.furnishly.dto.TypeDto;
 import com.ast.furnishly.entities.Manufacturer;
-import com.ast.furnishly.entities.Type;
 import com.ast.furnishly.mappers.ManufacturerMapper;
-import com.ast.furnishly.mappers.TypeMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of the {@link ManufacturerMapper} interface for converting between `Manufacturer`
+ * domain objects and `ManufacturerDto` data transfer objects.
+ */
 public class ManufacturerMapperImpl implements ManufacturerMapper {
     private static ManufacturerMapper manufacturerMapper;
 
+    /**
+     * Returns an instance of the `ManufacturerMapperImpl`.
+     *
+     * @return The singleton instance of `ManufacturerMapperImpl`.
+     */
     public static synchronized ManufacturerMapper getInstance(){
         if (manufacturerMapper == null){
             manufacturerMapper = new ManufacturerMapperImpl();

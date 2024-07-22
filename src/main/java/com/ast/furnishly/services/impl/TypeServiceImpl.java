@@ -11,6 +11,9 @@ import com.ast.furnishly.services.TypeService;
 
 import java.util.List;
 
+/**
+ * Implementation of the TypeService interface.
+ */
 public class TypeServiceImpl implements TypeService {
     private TypeRepository typeRepository = TypeRepositoryImpl.getInstance();
     private final TypeMapper typeMapper = TypeMapperImpl.getInstance();
@@ -18,6 +21,11 @@ public class TypeServiceImpl implements TypeService {
 
     private TypeServiceImpl() {}
 
+    /**
+     * Gets an instance of the TypeService.
+     *
+     * @return The TypeService instance.
+     */
     public static synchronized TypeService getInstance(){
         if (typeService == null){
             typeService = new TypeServiceImpl();
@@ -43,8 +51,8 @@ public class TypeServiceImpl implements TypeService {
         return typeRepository.deleteById(id);
     }
 
-    private void checkTypeExist(Long roleId) throws NotFoundException {
-        if (!typeRepository.existsById(roleId)) {
+    private void checkTypeExist(Long id) throws NotFoundException {
+        if (!typeRepository.existsById(id)) {
             throw new NotFoundException("Type not found.");
         }
     }
@@ -57,7 +65,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public void update(Long id, TypeDto typeDto) throws NotFoundException {
+    public void update(TypeDto typeDto) throws NotFoundException {
         checkTypeExist(typeDto.getId());
         Type type = typeMapper.map(typeDto);
         typeRepository.update(type);

@@ -1,13 +1,15 @@
 package com.ast.furnishly.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@AllArgsConstructor
+/**
+ * Data transfer object (DTO) for manufacturer information.
+ */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ManufacturerDto {
     private Long id;
     private String name;

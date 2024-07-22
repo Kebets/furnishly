@@ -7,9 +7,18 @@ import com.ast.furnishly.mappers.TypeMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of the {@link TypeMapper} interface for converting between `Type` domain objects
+ * and `TypeDto` data transfer objects.
+ */
 public class TypeMapperImpl implements TypeMapper {
     private static TypeMapper typeMapper;
 
+    /**
+     * Returns an instance of the `TypeMapperImpl`.
+     *
+     * @return The singleton instance of `TypeMapperImpl`.
+     */
     public static synchronized TypeMapper getInstance(){
         if (typeMapper == null){
             typeMapper = new TypeMapperImpl();
